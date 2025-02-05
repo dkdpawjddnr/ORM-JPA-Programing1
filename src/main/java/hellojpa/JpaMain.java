@@ -17,25 +17,12 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
-        try{
-            // 비영속 상태
-            Member member = new Member();
-            member.setId(100L);
-            member.setName("HelloJPA");
-
-            // 영속 상태
-            System.out.println("=== BEFORE ===");
-            em.persist(member);
-            System.out.println("=== AFTER ===");
-
-//            Member findMember = em.find(Member.class, 1L);
-//            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-//                    .setFirstResult(5)
-//                    .setMaxResults(8)
-//                    .getResultList();
-//            for (Member member : result){
-//                System.out.println("member.name = " + member.getName());
-//            }
+        try {
+                //영속
+            Member member = em.find(Member.class, 150L);
+            member.setName("ZZZZ");
+            //em.persist(member);
+            System.out.println("=================");
             tx.commit();
         } catch (Exception e){
             tx.rollback();
