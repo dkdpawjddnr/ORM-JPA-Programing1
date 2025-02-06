@@ -5,8 +5,6 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-import java.util.List;
-
 public class JpaMain {
 
     public static void main(String[] args) {
@@ -19,9 +17,11 @@ public class JpaMain {
 
         try {
                 //영속
-            Member member = em.find(Member.class, 150L);
-            member.setName("ZZZZ");
-            //em.persist(member);
+            Member member = new Member(200L, "member200");
+            em.persist(member);
+
+            em.flush();
+
             System.out.println("=================");
             tx.commit();
         } catch (Exception e){
