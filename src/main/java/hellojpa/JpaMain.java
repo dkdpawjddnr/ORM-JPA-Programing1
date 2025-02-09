@@ -16,17 +16,14 @@ public class JpaMain {
         tx.begin();
 
         try {
-            //영속 상태
-            Member member = em.find(Member.class, 150L);
-            // 더티체킹
-            member.setName("AAAAA");
 
-            em.clear();
+            Member member = new Member();
+            member.setId(2L);
+            member.setUsername("B");
+            member.setRoleType(RoleType.ADMIN);
 
-            Member member2 = em.find(Member.class, 150L);
-            //준영속 상태
-            // em.detach(member);
-            System.out.println("=================");
+            em.persist(member);
+
             tx.commit();
         } catch (Exception e){
             tx.rollback();
