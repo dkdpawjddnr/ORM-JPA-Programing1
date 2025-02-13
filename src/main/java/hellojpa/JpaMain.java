@@ -5,6 +5,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
+import java.util.List;
+
 public class JpaMain {
 
     public static void main(String[] args) {
@@ -24,16 +26,17 @@ public class JpaMain {
             Member member = new Member();
             member.setUsername("member1");
             member.setTeam(team);
+            em.persist(member);
+
+            em.flush();
+            em.clear();
 
             Member findMember = em.find(Member.class, member.getId());
+            List<Member> members = findMember.getTeam().getMembers();
 
-            Team findTeam = findMember.getTeam();
-            System.out.println("finaTeam = " + findTeam.getName());
-
-            // 연관관계 수정
-            Team newTeam = em.find(Team.class, 100L);
-            // 외래키 값이 업데이트 된다.
-            findMember.setTeam(newTeam);
+            for(Member m : members){
+                System.out.println("m = " + m.getUsername());
+            }
 
             tx.commit();
         } catch (Exception e){
