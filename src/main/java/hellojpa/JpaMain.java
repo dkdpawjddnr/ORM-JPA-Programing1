@@ -18,19 +18,18 @@ public class JpaMain {
         tx.begin();
 
         try {
-
+            
             Member member = new Member();
             member.setUsername("member1");
-
             em.persist(member);
-
+            
             Team team = new Team();
-            team.setName("teamA");
-            // 외래키가 Member 테이블에 있음
+            team.setName("team1");
             team.getMembers().add(member);
-
+            
+            // MEMBER TABLE의 TEAM_ID 외래키값이 업데이트
             em.persist(team);
-
+            
             tx.commit();
         } catch (Exception e){
             tx.rollback();
