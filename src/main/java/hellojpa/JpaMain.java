@@ -18,18 +18,19 @@ public class JpaMain {
         tx.begin();
 
         try {
-            
-            Member member = new Member();
-            member.setUsername("member1");
-            em.persist(member);
-            
-            Team team = new Team();
-            team.setName("team1");
-            team.getMembers().add(member);
-            
-            // MEMBER TABLE의 TEAM_ID 외래키값이 업데이트
-            em.persist(team);
-            
+
+            Movie movie = new Movie();
+            movie.setDirector("a");
+            movie.setActor("b");
+            movie.setName("괴물");
+            movie.setPrice(10000);
+
+            em.persist(movie);
+            em.flush();
+            em.clear();
+
+            Movie findMove = em.find(Movie.class, movie.getId());
+
             tx.commit();
         } catch (Exception e){
             tx.rollback();
