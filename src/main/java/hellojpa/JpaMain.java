@@ -17,39 +17,21 @@ public class JpaMain {
 
         try {
 
-            Member member = new Member();
-            member.setUsername("member1");
-            em.persist(member);
-
-            Member member2 = new Member();
-            member2.setUsername("member2");
-            em.persist(member2);
+            Member member1 = new Member();
+            member1.setUsername("member1");
+            em.persist(member1);
 
             em.flush();
             em.clear();
 
-            Member m1 = em.find(Member.class, member.getId());
-            // Member m2 = em.find(Member.class, member2.getId());
-            Member m3 = em.getReference(Member.class, member2.getId());
+            Member m1 = em.find(Member.class, member1.getId());
+            System.out.println("m1 = " + m1.getClass());
 
-            // 당연히 타입비교 true
-            // System.out.println("m1 == m2: " + (m1.getClass() == m2.getClass()));
+            Member reference = em.getReference(Member.class, member1.getId());
+            System.out.println("reference = " + reference.getClass());
 
-            // 하지만 false가 나옴 왜냐? 프록시 가짜 클래스니까
-            System.out.println("m1 == m3: " + (m1.getClass() == m3.getClass()));
-
-            // 타입비교 할 때는 instanceof 사용 해야 됨. (프록시 객체도 실제 엔티티를 상속하고 있기 때문에 true)
-            System.out.println("instanceof = " + (m3 instanceof Member));
-
-
-            // Member findMember = em.find(Member.class, member.getId());
-            Member findMember = em.getReference(Member.class, member.getId()); // 데이터베이스에 쿼리 안함.
-            System.out.println("findMember = " + findMember.getClass()); // 프록시 클래스 (가짜 클래스)
-
-            System.out.println("findMember.id = " + findMember.getId());
-
-            // 프록시에서 초기화 요청을 한 후에 DB를 조회하고, 실제 Entity를 생성한 후에 target에 저장되어 조회한다.
-            System.out.println("findMember = " + findMember.getUsername());
+            // 이미 영속성 컨텍스트에 있기 때문에 실제 엔티티를 반환한다.
+            System.out.println("a == a: " +(m1 == reference));
 
             tx.commit();
         } catch (Exception e){
