@@ -30,8 +30,8 @@ public class JpaMain {
             System.out.println("m = " + m.getTeam().getClass());
 
             System.out.println("==========");
-            //getName() 프록시 초기화, 실제 team을 사용하는 시점에 초기화
-            m.getTeam().getName();
+            //LAZY getName() 프록시 초기화, 실제 team을 사용하는 시점에 초기화
+            System.out.println("teamName = " + m.getTeam().getName());
             System.out.println("==========");
 
             tx.commit();
