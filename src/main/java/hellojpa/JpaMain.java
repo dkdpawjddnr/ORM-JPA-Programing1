@@ -37,11 +37,9 @@ public class JpaMain {
             em.clear();
 
 //            Member m = em.find(Member.class, member1.getId());
-            // EAGER 즉시 로딩은 JPQL에서 N+1 문제를 일으킨다.
-            // Member를 가지고 왔더니 Team이 즉시로딩이 되어있음. 값이 다 나와 있어야 함.
-            // Member쿼리 나가고 쿼리가 별도로 나가게 됨.
-            List<Member> members = em.createQuery("select m from Member m", Member.class)
+            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class)
                     .getResultList();
+
             // SQL: select * from Member;
             // SQL: select % from Team where TEAM_ID = xxx
 

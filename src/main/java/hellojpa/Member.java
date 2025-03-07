@@ -12,7 +12,7 @@ public class Member extends BaseEntity {
     private String username;
 
     // team 프록시 객체를 조회, Member 만 조회함.
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Team team;
     public Long getId() {
