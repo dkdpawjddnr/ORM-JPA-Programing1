@@ -30,7 +30,6 @@ public class JpaMain {
             em.clear();
 
             Parent findParent = em.find(Parent.class, parent.getId());
-            // 컬렉션에서 빠진 애는 삭제된다.
             findParent.getChildList().remove(0);
 
             tx.commit();
